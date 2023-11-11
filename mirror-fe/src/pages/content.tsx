@@ -22,7 +22,7 @@ const MyContent = (props: ContentProps) => {
           <div className="font-bold text-xs mb-2">Sources</div>
           <ol className="sources text-xs text-gray-300">
             {references?.map((i, idx) => (
-              <li>Credible sources: CRU, 2023</li>
+              <li key={idx}>Credible sources: CRU, 2023</li>
             ))}
           </ol>
           <div className="mt-3 flex items-center" ref={setRatingRef}>

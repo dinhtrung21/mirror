@@ -5,6 +5,14 @@ name = "pypi"
 
 [packages]
 flask = "*"
+torch = "*"
+torchvision = "*"
+torchaudio = "*"
+huggingface = "*"
+ipython = "*"
+ipywidgets = "*"
+ipykernel = "*"
+transformers = "*"
 
 [dev-packages]
 

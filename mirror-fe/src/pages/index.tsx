@@ -10,6 +10,7 @@ import PromptInput from './promptInput';
 import Content from './content';
 import Question from './question';
 import Landing from './landing';
+import { Rate } from 'antd';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -25,13 +26,15 @@ export default function Home() {
   const [currentPrompt, setCurrentPrompt] = useState<ResponseData | null>(null);
 
   const [oldPrompt, setOldPrompt] = useState<ResponseData[]>([]);
+  const [ratingRef, setRatingRef] = useState<any>(null);
 
   const handleSearch = (qs: string) => {
     // Put current prompt to old prompt
 
     if (currentPrompt) {
       console.log('currentPrompt >> ', currentPrompt);
-      setOldPrompt((o) => [currentPrompt, ...o]);
+      // setOldPrompt((o) => [currentPrompt, ...o]);
+      setOldPrompt((o) => [...o, currentPrompt]);
     }
 
     setCurrentPrompt({
@@ -46,7 +49,7 @@ export default function Home() {
     return await new Promise((resolve, reject) => {
       setTimeout(() => {
         resolve({ result });
-      }, 2000);
+      }, 2500);
     });
   };
 
@@ -62,25 +65,21 @@ export default function Home() {
     }
   }, [state.value]);
 
+  useEffect(() => {
+    if (ratingRef) {
+      setTimeout(() => {
+        console.log('ratingRef scrollIntoView >> ', ratingRef);
+        ratingRef.scrollIntoView({ behavior: 'smooth' });
+      }, 1500);
+    }
+  }, [ratingRef]);
+
   return (
     <main className={`${inter.className}`}>
       <div className="gradient-bg">
         <div className="flex min-h-screen flex-col items-center justify-center xl:px-24 ">
-          <div className=" min-h-[90vh] py-8 px-4 xl:px-20 xl:py-16 relative z-1 bg-[#18296c] w-full max-w-[800px]  xl:rounded-3xl text-white flex flex-col justify-between">
+          <div className=" min-h-[90vh] py-8 px-8 xl:px-20 xl:py-16 relative z-1 bg-[#18296c] w-full max-w-[800px]  xl:rounded-3xl text-white flex flex-col justify-between">
             <div className="overflow-auto  xl:h-[600px] xl:max-h-[600px] h-[80vh]">
-              <div className="current-prompt overflow-auto">
-                {currentPrompt?.q && <Question question={currentPrompt.q} />}
-                {currentPrompt?.a && <Content isCurrent content={currentPrompt.a} />}
-              </div>
-
-              {!currentPrompt && <Landing />}
-
-              {state.loading && (
-                <div className="px-16 py-8  flex justify-center">
-                  <Spinner />
-                </div>
-              )}
-
               <div className="all-promts ">
                 {oldPrompt.map((item, idx) => {
                   return (
@@ -91,6 +90,19 @@ export default function Home() {
                   );
                 })}
               </div>
+
+              <div className="current-prompt overflow-auto">
+                {currentPrompt?.q && <Question question={currentPrompt.q} />}
+                {currentPrompt?.a && <Content setRatingRef={setRatingRef} isCurrent content={currentPrompt.a} />}
+              </div>
+
+              {!currentPrompt && <Landing />}
+
+              {state.loading && (
+                <div className="px-16 py-8  flex justify-center">
+                  <Spinner />
+                </div>
+              )}
             </div>
 
             <PromptInput handleSearch={handleSearch} />

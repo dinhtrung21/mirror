@@ -211,3 +211,38 @@
     opacity: 0.7;
   }
 }
+
+.ant-rate-star.ant-rate-star-zero .ant-rate-star-second {
+  color: white;
+}
+
+.sources {
+  li + li {
+    margin-top: 4px;
+  }
+}
+.answer-content {
+  ul {
+    list-style-type: disc;
+    margin-left: 16px;
+  }
+  ol {
+    list-style-type: decimal;
+    margin-left: 16px;
+  }
+  ul li {
+    margin-left: 24px;
+  }
+
+  p + p {
+    margin-top: 12px;
+  }
+  p + ul {
+    margin-top: 12px;
+  }
+}
+
+ol {
+  list-style-type: decimal;
+  margin-left: 16px;
+}

@@ -84,7 +84,7 @@ export default function Home() {
                 )}
               </div>
 
-              {!currentPrompt && <Landing />}
+              {!currentPrompt && <Landing handleSearch={handleSearch} />}
 
               {state.loading && (
                 <div className="px-16 py-8  flex justify-center">

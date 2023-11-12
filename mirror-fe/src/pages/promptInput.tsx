@@ -23,6 +23,11 @@ const PromptInput = (props: PromptInputProps) => {
           className="border-[#2ca0e2] placeholder:text-white bg-transparent pr-16 rounded-2xl border-2 w-full py-3 px-5"
           placeholder="Enter a prompt here"
           onChange={(e) => setKeyword(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') {
+              handleSendButton();
+            }
+          }}
           value={keyword}
         />
         <button

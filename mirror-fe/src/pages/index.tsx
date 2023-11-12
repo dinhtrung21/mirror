@@ -1,19 +1,19 @@
-"use client";
+'use client';
 
-import Image from "next/image";
-import { Inter } from "next/font/google";
-import { SendOutlined } from "@ant-design/icons";
-import { useAsyncFn } from "react-use";
-import { useEffect, useRef, useState } from "react";
-import Spinner from "./spinner";
-import PromptInput from "./promptInput";
-import Content from "./content";
-import Question from "./question";
-import Landing from "./landing";
-import { Rate } from "antd";
-import axios from "axios";
+import Image from 'next/image';
+import { Inter } from 'next/font/google';
+import { SendOutlined } from '@ant-design/icons';
+import { useAsyncFn } from 'react-use';
+import { useEffect, useRef, useState } from 'react';
+import Spinner from './spinner';
+import PromptInput from './promptInput';
+import Content from './content';
+import Question from './question';
+import Landing from './landing';
+import { Rate } from 'antd';
+import axios from 'axios';
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({ subsets: ['latin'] });
 
 type ResponseData = {
   q: string;
@@ -22,7 +22,7 @@ type ResponseData = {
 
 export default function Home() {
   const result =
-    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla euismod, nunc vitae lacinia lacinia, nisl nunc lacinia nunc, vitae lacinia nunc nisl vit";
+    'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla euismod, nunc vitae lacinia lacinia, nisl nunc lacinia nunc, vitae lacinia nunc nisl vit';
 
   const [currentPrompt, setCurrentPrompt] = useState<ResponseData | null>(null);
 
@@ -34,21 +34,21 @@ export default function Home() {
     // Put current prompt to old prompt
 
     if (currentPrompt) {
-      console.log("currentPrompt >> ", currentPrompt);
+      console.log('currentPrompt >> ', currentPrompt);
       // setOldPrompt((o) => [currentPrompt, ...o]);
       setOldPrompt((o) => [...o, currentPrompt]);
     }
 
     setCurrentPrompt({
       q: qs,
-      a: "",
+      a: '',
     });
 
     cb(qs);
   };
 
   const fetchAPI = async (kw: string): Promise<any> => {
-    return await axios.post("http://localhost:5000/api/chatbot", {
+    return await axios.post('https://mirror-be.onrender.com/api/chatbot', {
       message: kw,
     });
   };
@@ -56,7 +56,7 @@ export default function Home() {
   const [state, cb] = useAsyncFn(fetchAPI);
 
   useEffect(() => {
-    console.log("state.value >> ", state.value);
+    console.log('state.value >> ', state.value);
     if (state.value) {
       setCurrentPrompt({
         a: state.value?.data?.answer as string,
@@ -70,7 +70,7 @@ export default function Home() {
   useEffect(() => {
     if (ratingRef) {
       setTimeout(() => {
-        ratingRef.scrollIntoView({ behavior: "smooth" });
+        ratingRef.scrollIntoView({ behavior: 'smooth' });
       }, 1500);
     }
   }, [ratingRef]);
@@ -95,12 +95,7 @@ export default function Home() {
               <div className="current-prompt overflow-auto">
                 {currentPrompt?.q && <Question question={currentPrompt.q} />}
                 {currentPrompt?.a && (
-                  <Content
-                    setRatingRef={setRatingRef}
-                    isCurrent
-                    content={currentPrompt.a}
-                    references={references}
-                  />
+                  <Content setRatingRef={setRatingRef} isCurrent content={currentPrompt.a} references={references} />
                 )}
               </div>
 

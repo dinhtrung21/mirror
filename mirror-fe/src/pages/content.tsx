@@ -1,5 +1,5 @@
-import { Rate } from "antd";
-import { Dispatch, forwardRef } from "react";
+import { Rate } from 'antd';
+import { Dispatch, forwardRef } from 'react';
 
 interface ContentProps {
   content: string;
@@ -22,7 +22,7 @@ const MyContent = (props: ContentProps) => {
           <div className="font-bold text-xs mb-2">Sources</div>
           <ol className="sources text-xs text-gray-300">
             {references?.map((i, idx) => (
-              <li key={idx}>Credible sources: CRU, 2023</li>
+              <li key={idx}>{i}</li>
             ))}
           </ol>
           <div className="mt-3 flex items-center" ref={setRatingRef}>

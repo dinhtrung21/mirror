@@ -1,16 +1,13 @@
 'use client';
 
-import Image from 'next/image';
 import { Inter } from 'next/font/google';
-import { SendOutlined } from '@ant-design/icons';
 import { useAsyncFn } from 'react-use';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Spinner from './spinner';
 import PromptInput from './promptInput';
 import Content from './content';
 import Question from './question';
 import Landing from './landing';
-import { Rate } from 'antd';
 import axios from 'axios';
 
 const inter = Inter({ subsets: ['latin'] });
@@ -21,9 +18,6 @@ type ResponseData = {
 };
 
 export default function Home() {
-  const result =
-    'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla euismod, nunc vitae lacinia lacinia, nisl nunc lacinia nunc, vitae lacinia nunc nisl vit';
-
   const [currentPrompt, setCurrentPrompt] = useState<ResponseData | null>(null);
 
   const [oldPrompt, setOldPrompt] = useState<ResponseData[]>([]);
@@ -31,19 +25,11 @@ export default function Home() {
   const [references, setRefs] = useState<any>([]);
 
   const handleSearch = (qs: string) => {
-    // Put current prompt to old prompt
-
     if (currentPrompt) {
-      console.log('currentPrompt >> ', currentPrompt);
-      // setOldPrompt((o) => [currentPrompt, ...o]);
       setOldPrompt((o) => [...o, currentPrompt]);
     }
 
-    setCurrentPrompt({
-      q: qs,
-      a: '',
-    });
-
+    setCurrentPrompt({ q: qs, a: '' });
     cb(qs);
   };
 
@@ -56,7 +42,6 @@ export default function Home() {
   const [state, cb] = useAsyncFn(fetchAPI);
 
   useEffect(() => {
-    console.log('state.value >> ', state.value);
     if (state.value) {
       setCurrentPrompt({
         a: state.value?.data?.answer as string,
@@ -86,7 +71,7 @@ export default function Home() {
                   return (
                     <div className="prompt__item" key={item.q + idx}>
                       <Question question={item.q} />
-                      <Content content={item.a} />
+                      <Content content={item.a} references={references} />
                     </div>
                   );
                 })}
